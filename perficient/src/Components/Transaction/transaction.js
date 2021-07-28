@@ -7,7 +7,7 @@ export function DepositOrWithdraw({
   OnSubmit,
 }) {
   return (
-    <form onSubmit={OnSubmit}>
+    <form onSubmit={(e) => OnSubmit(e, transactionType)}>
       <h3>{transactionType}</h3>
       <label htmlFor="amount">Amount</label>
       <input type="text" id="amount" onChange={OnChangeamount} />
