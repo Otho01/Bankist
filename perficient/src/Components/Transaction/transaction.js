@@ -1,13 +1,19 @@
 import React from "react";
 
-export function depositOrWithdraw({ transaction }) {
+export function DepositOrWithdraw({
+  transactionType,
+  OnChangeamount,
+  OnChangeCheckNumber,
+  OnSubmit,
+}) {
   return (
-    <section>
-      <h3>{transaction}</h3>
-      <label htmlFor="checkNumber">Check Number</label>
-      <input type="text" id="checkNumber"></input>
+    <form onSubmit={OnSubmit}>
+      <h3>{transactionType}</h3>
       <label htmlFor="amount">Amount</label>
+      <input type="text" id="amount" onChange={OnChangeamount} />
+      <label htmlFor="checkNumber">CheckNumber</label>
+      <input type="text" id="checkNumber" onChange={OnChangeCheckNumber} />
       <button type="submit">Submit</button>
-    </section>
+    </form>
   );
 }
