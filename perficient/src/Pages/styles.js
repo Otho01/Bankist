@@ -1,11 +1,23 @@
 import styled from "styled-components";
 
-export const styledTable = styled.table``;
+export const StyledMain = styled.main`
+  margin: 100px;
+`;
+
+export const StyledSection = styled.section`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StyledTable = styled.table`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export const StyledTd = styled.td`
   border: 1px solid #ddd;
   padding: 8px;
-  height: fit-content;
+  justify-content: space-between;
 `;
 
 export const StyledTh = styled.th`

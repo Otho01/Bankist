@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { DepositOrWithdraw } from "../Components/Transaction/transaction";
 import Moment from "react-moment";
-import { StyledTd, StyledTh } from "./styles";
+import {
+  StyledMain,
+  StyledSection,
+  StyledTable,
+  StyledTd,
+  StyledTh,
+} from "./styles";
 
 export function BankPage() {
   const newDate = <Moment format="YYYY-MM-DD hh:mm:ss"></Moment>;
@@ -46,9 +52,15 @@ export function BankPage() {
       return transactionList.indexOf(transaction) !== 0 ? (
         <tr key={`tr-${transactionList.indexOf(transaction)}`}>
           <StyledTd key={transaction[i]}>{transaction.date}</StyledTd>
-          <StyledTd>{transaction.transactionType}</StyledTd>
-          <StyledTd>{transaction.Check}</StyledTd>
-          <StyledTd>{transaction.amount}</StyledTd>
+          <StyledTd key={`tr-${transactionList.indexOf(transaction)}`}>
+            {transaction.transactionType}
+          </StyledTd>
+          <StyledTd key={`tr-${transactionList.indexOf(transaction)}`}>
+            {transaction.Check}
+          </StyledTd>
+          <StyledTd key={`tr-${transactionList.indexOf(transaction)}`}>
+            {transaction.amount}
+          </StyledTd>
         </tr>
       ) : (
         ""
@@ -57,27 +69,29 @@ export function BankPage() {
   }
 
   return (
-    <>
-      <section>
+    <StyledMain>
+      <StyledSection>
         <DepositOrWithdraw
-          transactionType="Debit"
-          OnChangeAmount={(e) => setAmount(e.target.value)}
-          OnChangeCheckNumber={(e) => setCheck(e.target.value)}
-          OnSubmit={handleSubmit}
-        />
-        <DepositOrWithdraw
+          debit={false}
           transactionType="Credit"
+          OnChangeAmount={(e) => setAmount(e.target.value)}
+          OnChangeCheckNumber={(e) => setCheck(e.target.value)}
+          OnSubmit={handleSubmit}
+        />
+        <DepositOrWithdraw
+          debit
+          transactionType="Debit"
           OnSubmit={handleSubmit}
           OnChangeAmount={(e) => setAmount(e.target.value)}
           OnChangeCheckNumber={(e) => setCheck(e.target.value)}
         />
-      </section>
-      <table>
+      </StyledSection>
+      <StyledTable>
         <tbody>
           <tr>{tableTittle()}</tr>
           {tableData()}
         </tbody>
-      </table>
-    </>
+      </StyledTable>
+    </StyledMain>
   );
 }

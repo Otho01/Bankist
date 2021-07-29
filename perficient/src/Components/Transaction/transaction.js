@@ -1,20 +1,38 @@
 import React from "react";
-import { StyledForm } from "./styles";
+import {
+  StyledButton,
+  StyledForm,
+  StyledH3,
+  StyledInput,
+  StyledLabel,
+  StyledSection,
+} from "./styles";
 
 export function DepositOrWithdraw({
   transactionType,
   OnChangeAmount,
   OnChangeCheckNumber,
   OnSubmit,
+  debit,
 }) {
   return (
-    <StyledForm debit onSubmit={(e) => OnSubmit(e, transactionType)}>
-      <h3>{transactionType}</h3>
-      <label htmlFor="amount">Amount</label>
-      <input type="text" id="amount" onChange={OnChangeAmount} />
-      <label htmlFor="checkNumber">CheckNumber</label>
-      <input type="text" id="checkNumber" onChange={OnChangeCheckNumber} />
-      <button type="submit">Submit</button>
+    <StyledForm debit={debit} onSubmit={(e) => OnSubmit(e, transactionType)}>
+      <StyledH3>
+        {transactionType === "Credit" ? "Add Deposit" : "Subtract Debit"}
+      </StyledH3>
+      <StyledSection>
+        <StyledLabel htmlFor="amount">Amount:</StyledLabel>
+        <StyledInput type="text" id="amount" onChange={OnChangeAmount} />
+      </StyledSection>
+      <StyledSection>
+        <StyledLabel htmlFor="checkNumber">Check Number:</StyledLabel>
+        <StyledInput
+          type="text"
+          id="checkNumber"
+          onChange={OnChangeCheckNumber}
+        />
+      </StyledSection>
+      <StyledButton type="submit">Submit</StyledButton>
     </StyledForm>
   );
 }
