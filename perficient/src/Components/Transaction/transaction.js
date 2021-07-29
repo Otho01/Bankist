@@ -1,4 +1,5 @@
 import React from "react";
+import CurrencyFormat from "react-currency-format";
 import {
   StyledButton,
   StyledForm,
@@ -22,7 +23,14 @@ export function DepositOrWithdraw({
       </StyledH3>
       <StyledSection>
         <StyledLabel htmlFor="amount">Amount:</StyledLabel>
-        <StyledInput type="text" id="amount" onChange={OnChangeAmount} />
+        <CurrencyFormat
+          customInput={StyledInput}
+          thousandSeparator={false}
+          id="amount"
+          onChange={OnChangeAmount}
+          required
+          onfocusout="value=''"
+        />
       </StyledSection>
       <StyledSection>
         <StyledLabel htmlFor="checkNumber">Check Number:</StyledLabel>
@@ -30,6 +38,7 @@ export function DepositOrWithdraw({
           type="text"
           id="checkNumber"
           onChange={OnChangeCheckNumber}
+          required
         />
       </StyledSection>
       <StyledButton type="submit">Submit</StyledButton>

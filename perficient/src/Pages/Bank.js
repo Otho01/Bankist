@@ -2,17 +2,24 @@ import { useEffect, useState } from "react";
 import { DepositOrWithdraw } from "../Components/Transaction/transaction";
 import Moment from "react-moment";
 import {
+  Styledh2Header,
+  StyledH2Ledger,
   StyledMain,
+  StyledParagraph,
   StyledSection,
+  StyledSectionHeader,
   StyledTable,
+  StyledTbody,
   StyledTd,
   StyledTh,
+  StyledTr,
 } from "./styles";
 
 export function BankPage() {
   const newDate = <Moment format="YYYY-MM-DD hh:mm:ss"></Moment>;
   const [amount, setAmount] = useState(0);
   const [check, setCheck] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [transactionList, setTransactionList] = useState([
     {
       Date: newDate,
@@ -23,7 +30,10 @@ export function BankPage() {
   ]);
 
   useEffect(() => {
-    console.log(transactionList, check);
+    console.log(transactionList);
+    console.log(typeof balance);
+    console.log(typeof amount);
+    console.log(amount);
   }, [transactionList]);
 
   function handleSubmit(e, transactionType) {
@@ -37,6 +47,9 @@ export function BankPage() {
         date: newDate,
       },
     ]);
+    transactionType === "Debit"
+      ? setBalance(parseFloat(balance) - parseFloat(amount))
+      : setBalance(parseFloat(balance) + parseFloat(amount));
   }
   function tableTittle() {
     const tableHeader = Object.keys(transactionList[0]);
@@ -50,18 +63,32 @@ export function BankPage() {
   function tableData() {
     return transactionList.map((transaction, i) => {
       return transactionList.indexOf(transaction) !== 0 ? (
-        <tr key={`tr-${transactionList.indexOf(transaction)}`}>
-          <StyledTd key={transaction[i]}>{transaction.date}</StyledTd>
-          <StyledTd key={`tr-${transactionList.indexOf(transaction)}`}>
+        <StyledTr key={`tr-${transactionList.indexOf(transaction)}`}>
+          <StyledTd
+            key={`td0-${transactionList.indexOf(transaction)}`}
+            backgroundKey={i}
+          >
+            {transaction.date}
+          </StyledTd>
+          <StyledTd
+            key={`td1-${transactionList.indexOf(transaction)}`}
+            backgroundKey={i}
+          >
             {transaction.transactionType}
           </StyledTd>
-          <StyledTd key={`tr-${transactionList.indexOf(transaction)}`}>
+          <StyledTd
+            key={`td2-${transactionList.indexOf(transaction)}`}
+            backgroundKey={i}
+          >
             {transaction.Check}
           </StyledTd>
-          <StyledTd key={`tr-${transactionList.indexOf(transaction)}`}>
+          <StyledTd
+            key={`td3-${transactionList.indexOf(transaction)}`}
+            backgroundKey={i}
+          >
             {transaction.amount}
           </StyledTd>
-        </tr>
+        </StyledTr>
       ) : (
         ""
       );
@@ -70,6 +97,9 @@ export function BankPage() {
 
   return (
     <StyledMain>
+      <StyledSectionHeader>
+        <Styledh2Header>Perficient National Bank</Styledh2Header>
+      </StyledSectionHeader>
       <StyledSection>
         <DepositOrWithdraw
           debit={false}
@@ -87,10 +117,12 @@ export function BankPage() {
         />
       </StyledSection>
       <StyledTable>
-        <tbody>
+        <StyledH2Ledger>Ledger</StyledH2Ledger>
+        <StyledParagraph>Balance: {balance}</StyledParagraph>
+        <StyledTbody>
           <tr>{tableTittle()}</tr>
           {tableData()}
-        </tbody>
+        </StyledTbody>
       </StyledTable>
     </StyledMain>
   );
