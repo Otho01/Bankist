@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { DepositOrWithdraw } from "../Components/Transaction/transaction";
 import Moment from "react-moment";
+import { StyledTd, StyledTh } from "./styles";
 
 export function BankPage() {
-  const date = new Date();
   const newDate = <Moment format="YYYY-MM-DD hh:mm:ss"></Moment>;
   const [amount, setAmount] = useState(0);
-  const [checkNumber, setCheckNumber] = useState(0);
+  const [check, setCheck] = useState(0);
   const [transactionList, setTransactionList] = useState([
     {
-      date: newDate,
+      Date: newDate,
       Type: "Type",
-      checkNumber: checkNumber,
+      Check: check,
       amount: amount,
     },
   ]);
 
   useEffect(() => {
-    console.log(transactionList);
+    console.log(transactionList, check);
   }, [transactionList]);
 
   function handleSubmit(e, transactionType) {
@@ -25,7 +25,7 @@ export function BankPage() {
     setTransactionList([
       ...transactionList,
       {
-        checkNumber,
+        Check: check,
         amount,
         transactionType,
         date: newDate,
@@ -37,19 +37,18 @@ export function BankPage() {
     return (
       !!transactionList &&
       tableHeader.map((key, index) => {
-        return <th key={index}>{key.toUpperCase()}</th>;
+        return <StyledTh key={index}>{`${key}:`}</StyledTh>;
       })
     );
   }
   function tableData() {
-    const { date, type, checkNumber, amount } = transactionList;
     return transactionList.map((transaction, i) => {
       return transactionList.indexOf(transaction) !== 0 ? (
-        <tr key={transaction[i]}>
-          <td>{transaction.date}</td>
-          <td>{transaction.transactionType}</td>
-          <td>{transaction.checkNumber}</td>
-          <td>{transaction.amount}</td>
+        <tr key={`tr-${transactionList.indexOf(transaction)}`}>
+          <StyledTd key={transaction[i]}>{transaction.date}</StyledTd>
+          <StyledTd>{transaction.transactionType}</StyledTd>
+          <StyledTd>{transaction.Check}</StyledTd>
+          <StyledTd>{transaction.amount}</StyledTd>
         </tr>
       ) : (
         ""
@@ -62,15 +61,15 @@ export function BankPage() {
       <section>
         <DepositOrWithdraw
           transactionType="Debit"
-          OnChangeamount={(e) => setAmount(e.target.value)}
-          OnChangeCheckNumber={(e) => setCheckNumber(e.target.value)}
+          OnChangeAmount={(e) => setAmount(e.target.value)}
+          OnChangeCheckNumber={(e) => setCheck(e.target.value)}
           OnSubmit={handleSubmit}
         />
         <DepositOrWithdraw
           transactionType="Credit"
           OnSubmit={handleSubmit}
-          OnChangeamount={(e) => setAmount(e.target.value)}
-          OnChangeCheckNumber={(e) => setCheckNumber(e.target.value)}
+          OnChangeAmount={(e) => setAmount(e.target.value)}
+          OnChangeCheckNumber={(e) => setCheck(e.target.value)}
         />
       </section>
       <table>
